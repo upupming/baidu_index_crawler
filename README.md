@@ -13,7 +13,13 @@
 
 ## 处理流程
 
-将 `config-sample.py` 重命名为 `config.py`，登录百度主页，打开 Chrome 开发者工具页面，复制 COOKIES，粘贴到 `config.py`。
+将 `config-sample.py` 重命名为 `config.py`，登录百度主页，打开 Chrome 开发者工具页面，复制 COOKIES，粘贴到 `config.py`。同时创建输出目录 `results`。
+
+```bash
+$ cp config-sample.py config.py 
+$ mkdir results
+$ make
+```
 
 1. 从 `companies.txt` 读取关键字，进行预处理
 2. 加载配置信息，初始化 `BaiduIndex` 类
