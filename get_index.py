@@ -35,6 +35,7 @@ class BaiduIndex:
         self.output_dir = para['输出目录']
 
         for i in range(len(self.keywords)):
+            print(f'关键词 {i+1}: ', keyword)
             keyword = self.keywords[i]
             try:
                 self.result = None
@@ -53,6 +54,7 @@ class BaiduIndex:
                     choice = input(f'是否继续进行抓取？ (r)etry, (s)kip this keyword）, (e)xit: ')
                 if choice == 'r':
                     i = i - 1
+                    print('Changed i: ', i)
                     continue
                 elif choice == 's':
                     continue
@@ -82,7 +84,6 @@ class BaiduIndex:
         else:
             self.end_date = end_date
         
-        print('关键词: ', keyword)
         print('setDay: ', '设置起止时间完毕')
         print('start_date: ', start_date)
         print('end_date: ', end_date)
@@ -167,9 +168,9 @@ class BaiduIndex:
                 try:
                     file.write(','+self.result[area]['all'][0][i])
                 except Exception:
-                    print(f'想要位于索引 {i} 处的数据')
+                    print(f'想要索引到 {time_len} 处的数据为止')
                     print(f'但总长度只有', len(self.result[area]['all'][0]))
-                    raise
+                    break
             file.write('\n')
         file.write('\n')
         file.close()
