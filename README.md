@@ -54,6 +54,10 @@ https://index.baidu.com/v2/main/index.html#/trend/%E4%B8%AD%E8%88%AA%E5%96%84%E8
 
 ### 访问过于频繁
 
+```txt
+错误:  string indices must be integers
+```
+
 ![20190221132527.png](https://i.loli.net/2019/02/21/5c6e36493943e.png)
 
 ![20190221140158.png](https://i.loli.net/2019/02/21/5c6e3ed79e82f.png)
