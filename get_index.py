@@ -38,8 +38,8 @@ class BaiduIndex:
         self.output_dir = para['输出目录']
 
         for i in range(len(self.keywords)):
-            print(f'关键词 {i+1}: ', keyword)
             keyword = self.keywords[i]
+            print(f'关键词 {i+1}: ', keyword)
             try:
                 self.result = None
                 self.result = {area: defaultdict(list) for area in self.areas}

@@ -4,8 +4,8 @@
 
 ## 待查询数据
 
-[`data/companies.txt`](data/companies.txt): 所有需要查询的公司名称，用 `，`（全角逗号） 分隔
-`data/test.txt`: 测试用的关键字，用 `，` 分隔
+- [`data/companies.txt`](data/companies.txt): 所有需要查询的公司名称，用 `，`（全角逗号） 分隔
+- `data/test.txt`: 测试用的关键字，用 `，` 分隔
 
 ## 查询结果
 
@@ -16,11 +16,12 @@
 将 `config-sample.py` 重命名为 `config.py`，登录百度主页，打开 Chrome 开发者工具页面，复制 COOKIES，粘贴到 `config.py`。同时创建输出目录 `results`。
 
 ```bash
-$ cp config-sample.py config.py 
+$ cp config-sample.py config.py
 $ mkdir results
 $ make
 ```
-> 注意：由于百度会对频繁访问进行限制，建议使用多个账户的 COOKIE 进行轮流切换使用。
+
+> 注意：由于百度会对频繁访问进行限制，建议使用多个账户的 COOKIE 进行轮流切换使用。同时请确保 COOKIE 的正确性。
 
 1. 从 `companies.txt` 读取关键字，进行预处理
 2. 加载配置信息，初始化 `BaiduIndex` 类
@@ -45,27 +46,45 @@ $ make
 
 https://index.baidu.com/v2/main/index.html#/trend/%E4%B8%AD%E8%88%AA%E5%96%84%E8%BE%BE?words=%E4%B8%AD%E8%88%AA%E5%96%84%E8%BE%BE
 
-![20190221124836.png](https://i.loli.net/2019/02/21/5c6e2da60281c.png)
-
-![20190221140223.png](https://i.loli.net/2019/02/21/5c6e3ef076ee2.png)
-
-### Connection reset by peer
-
-![20190221151506.png](https://i.loli.net/2019/02/21/5c6e4ffb9285f.png)
-
-### 访问过于频繁
-
 报错如下：
 
 ```txt
 错误:  string indices must be integers
 ```
 
-究其根源：
+究其根源是返回的 `data` 为空：
+
+<details>
+
+![20190221124836.png](https://i.loli.net/2019/02/21/5c6e2da60281c.png)
+
+![20190221140223.png](https://i.loli.net/2019/02/21/5c6e3ef076ee2.png)
+
+</details>
+
+### Connection reset by peer
+
+<details>
+
+![20190221151506.png](https://i.loli.net/2019/02/21/5c6e4ffb9285f.png)
+
+</details>
+
+### 访问过于频繁
+
+同样是返回的 `data` 为空。
+
+<details>
 
 ![20190221132527.png](https://i.loli.net/2019/02/21/5c6e36493943e.png)
 
 ![20190221140158.png](https://i.loli.net/2019/02/21/5c6e3ed79e82f.png)
+
+</details>
+
+### 索引超出 list 边界
+
+这是因为在输出数据的时候发现获取的数据时间长度不足所要求的时间长度，尚未查明原因，忽略即可。
 
 ## 致谢
 
