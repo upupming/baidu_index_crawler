@@ -23,6 +23,9 @@ class BaiduIndex:
     """
 
     def __init__(self, para):
+        # 当前使用的 COOKIE 索引
+        self.cookie_index = 0
+
         self.nowTime = datetime.datetime.now().strftime('%Y-%m-%d %H-%M-%S')
         self.data = []
         keyword = para['关键词']
@@ -50,14 +53,17 @@ class BaiduIndex:
                 print(f'对关键词 [{keyword}] 的查询出了一点小问题，可能是因为访问太过频繁或者其他原因')
                 print(f'建议您先到百度指数查询关键词 【{keyword}】，获取当前错误状态，再继续进行抓取')
                 choice = ''
-                while choice != 'r' and choice != 's' and choice != 'e':
-                    choice = input(f'是否继续进行抓取？ (r)etry, (s)kip this keyword）, (e)xit: ')
+                while choice != 'r' and choice != 's' and choice != 'e' and choice != 'c':
+                    choice = input(f'是否继续进行抓取？ (r)etry, (s)kip this keyword, (e)xit, (c)hange to use another cookie: ')
                 if choice == 'r':
                     i = i - 1
                     print('Changed i: ', i)
                     continue
                 elif choice == 's':
                     continue
+                elif choice == 'c':
+                    i = i - 1
+                    self.cookie_index = (self.cookie_index + 1) % len(COOKIES)
                 elif choice == 'e':
                     exit()
 
@@ -111,7 +117,7 @@ class BaiduIndex:
         }
         url = 'http://index.baidu.com/api/SearchApi/index?' + \
             urlencode(request_args)
-        datas = json.loads(self.http_get(url))
+        datas = json.loads(self.http_get(url, COOKIES[self.cookie_index]))
         encrypt_datas = datas['data']['userIndexes'][0]['all']
         return encrypt_datas
 
@@ -128,7 +134,7 @@ class BaiduIndex:
         }
         url = 'http://index.baidu.com/api/SearchApi/index?' + \
             urlencode(request_args)
-        html = self.http_get(url)
+        html = self.http_get(url, COOKIES[self.cookie_index])
         datas = json.loads(html)
         uniqid = datas['data']['uniqid']
         encrypt_datas = []
@@ -140,7 +146,7 @@ class BaiduIndex:
         """
         """
         url = 'http://index.baidu.com/Interface/api/ptbk?uniqid=%s' % uniqid
-        html = self.http_get(url)
+        html = self.http_get(url, COOKIES[self.cookie_index])
         datas = json.loads(html)
         key = datas['data']
         return key
@@ -176,7 +182,7 @@ class BaiduIndex:
         file.close()
 
     @staticmethod
-    def http_get(url, cookies=COOKIES):
+    def http_get(url, cookies):
         headers['Cookie'] = cookies
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
