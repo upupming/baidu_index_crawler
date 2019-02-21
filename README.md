@@ -4,7 +4,7 @@
 
 ## 待查询数据
 
-`data/companies.txt`: 所有需要查询的公司名称，用 `，`（全角逗号） 分隔
+[`data/companies.txt`](data/companies.txt): 所有需要查询的公司名称，用 `，`（全角逗号） 分隔
 `data/test.txt`: 测试用的关键字，用 `，` 分隔
 
 ## 查询结果
